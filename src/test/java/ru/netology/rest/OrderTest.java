@@ -42,7 +42,6 @@ public class OrderTest {
 
     @Test
     void SendForm() {
-        List<WebElement> input = driver.findElements(By.cssSelector("input"));
         driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Артем Иванов");
         driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+73495874356");
         driver.findElement(By.cssSelector("[data-test-id='agreement']")).click();
@@ -54,59 +53,54 @@ public class OrderTest {
     //Невалидные данные в поле "Фамилия и имя"
     @Test
     void shouldReturnErrorNameField() {
-        List<WebElement> input = driver.findElements(By.cssSelector("input"));
         driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Ivan");
         driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+73495874356");
         driver.findElement(By.cssSelector("[data-test-id='agreement']")).click();
         driver.findElement(By.className("button")).click();
-        String text = driver.findElement(By.cssSelector("[data-test-id='name'] .input__sub")).getText();
+        String text = driver.findElement(By.cssSelector("[data-test-id='name'].input_invalid .input__sub")).getText();
         assertEquals("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы.", text.trim());
     }
 
     //Не заполнено поле "Фамилия и имя"
     @Test
     void shouldReturnErrorNameFieldNotFilled() {
-        List<WebElement> input = driver.findElements(By.cssSelector("input"));
         driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("");
         driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+73495874356");
         driver.findElement(By.cssSelector("[data-test-id='agreement']")).click();
         driver.findElement(By.className("button")).click();
-        String text = driver.findElement(By.cssSelector("[data-test-id='name'] .input__sub")).getText();
+        String text = driver.findElement(By.cssSelector("[data-test-id='name'].input_invalid .input__sub")).getText();
         assertEquals("Поле обязательно для заполнения", text.trim());
     }
 
     //Невалидные данные в поле "Мобильный телефон"
     @Test
     void shouldReturnErrorPhoneField() {
-        List<WebElement> input = driver.findElements(By.cssSelector("input"));
         driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Павел Сергеев");
         driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+7349587435");
         driver.findElement(By.cssSelector("[data-test-id='agreement']")).click();
         driver.findElement(By.className("button")).click();
-        String text = driver.findElement(By.cssSelector("[data-test-id='phone'] .input__sub")).getText();
+        String text = driver.findElement(By.cssSelector("[data-test-id='phone'].input_invalid .input__sub")).getText();
         assertEquals("Телефон указан неверно. Должно быть 11 цифр, например, +79012345678.", text.trim());
     }
 
     //Не заполнено поле "Мобильный телефо"
     @Test
     void shouldReturnErrorPhoneFieldNotFilled() {
-        List<WebElement> input = driver.findElements(By.cssSelector("input"));
         driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Павел Сергеев");
         driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("");
         driver.findElement(By.cssSelector("[data-test-id='agreement']")).click();
         driver.findElement(By.className("button")).click();
-        String text = driver.findElement(By.cssSelector("[data-test-id='phone'] .input__sub")).getText();
+        String text = driver.findElement(By.cssSelector("[data-test-id='phone'].input_invalid .input__sub")).getText();
         assertEquals("Поле обязательно для заполнения", text.trim());
     }
 
     //Не заполнен чек-бокс
     @Test
     void shouldNotRegistrationWithoutCheckBox() {
-        List<WebElement> input = driver.findElements(By.cssSelector("input"));
         driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Сергей Трофимов");
         driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+77630589265");
         driver.findElement(By.className("button")).click();
-        String text = driver.findElement(By.cssSelector("[data-test-id='agreement'] .checkbox__text")).getText();
+        String text = driver.findElement(By.cssSelector("[data-test-id='agreement'].input_invalid .checkbox__text")).getText();
         assertEquals("Я соглашаюсь с условиями обработки и использования моих персональных данных и разрешаю сделать запрос в бюро кредитных историй", text.trim());
     }
 }
